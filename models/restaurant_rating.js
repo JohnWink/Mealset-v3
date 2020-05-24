@@ -124,7 +124,7 @@ Rating.update = (newRating,idRestaurant, idUser, result) => {
 
 Rating.delete = (idRestaurant, idUser, result) => {
 
-    db.con.query("UPDATE Rating_Restaurante SET ativo = 0 WHERE idRestaurante = ? AND idCliente = ? AND ativo=1",
+    db.con.query("DELETE FROM Rating_Restaurante  WHERE idRestaurante = ? AND idCliente = ?",
         [idRestaurant, idUser], (err, res) => {
 
             if (err) {
@@ -147,7 +147,7 @@ Rating.delete = (idRestaurant, idUser, result) => {
 
 Rating.deleteByUser = (idUser, result) => {
 
-    db.con.query("UPDATE Rating_Restaurante SET ativo = 0 WHERE idCliente = ? AND ativo=1",
+    db.con.query("DELETE FROM Rating_Restaurante WHERE idCliente = ?",
     idUser, (err, res) => {
 
             if (err) {

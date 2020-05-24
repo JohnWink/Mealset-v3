@@ -84,7 +84,7 @@ Rating.update = (idPlate,idUser,value,result) =>{
 
 Rating.delete = (idPlate,idUser,result) =>{
 
-    db.con.query("UPDATE Prato_Rating SET ativo = 0 WHERE idPrato = ? AND idCliente = ? AND ativo=1",
+    db.con.query("DELETE FROM Prato_Rating  WHERE idPrato = ? AND idCliente = ?",
     [idPlate,idUser], (err,res)=>{
 
         if(err){
@@ -107,7 +107,7 @@ Rating.delete = (idPlate,idUser,result) =>{
 
 Rating.deleteByUser = (idUser,result) =>{
 
-    db.con.query("UPDATE Prato_Rating SET ativo = 0 WHERE idCliente = ? AND ativo=1",
+    db.con.query("DELETE FROM Prato_Rating WHERE idCliente = ?",
     idUser, (err,res)=>{
 
         if(err){
