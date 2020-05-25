@@ -38,13 +38,14 @@ exports.findById = (req, res) => {
 }
 
 exports.update = (req, res) => {
+
     if (!req.body) {
         res.status(400).send({ message: "Content cannot be empty" })
     }
     else {
 
         const name = db.con.escape(req.body.name)
-        const idIngredient = db.con.escape(req.body.idIngredient)
+        const idIngredient = db.con.escape(req.params.idIngredient)
 
         Ingredient.findById(name,(err,data)=>{
             if(err){

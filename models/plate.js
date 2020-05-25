@@ -88,7 +88,7 @@ Plate.delete = (idPlate, result) => {
             return;
         }
 
-        console.log("deleted customer with id: ", plateId);
+        console.log("deleted customer with id: ", idPlate);
         result(null, res);
     });
 };
@@ -112,9 +112,9 @@ Plate.deleteAll = (idRestaurant,result) => {
     });
   };
 
-  Plate.update=(id, plate,result)=>{
+  Plate.update=(idPlate, plate,result)=>{
       db.con.query("UPDATE Prato SET nome=?,descrição=?,preço=?,foto=? WHERE idPrato = ? AND ativo = 1",
-      [plate.nome, plate.descrição, plate.preço,plate.foto,id],
+      [plate.nome, plate.descrição, plate.preço,plate.foto,idPlate],
       (err,res)=>{
           if(err){
               result(err,null)

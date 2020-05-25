@@ -3,7 +3,9 @@ const Ingredient = require("../models/ingredient.js")
 const db = require("../db")
 
 exports.getAll = (req, res) => {
-    const idPlate = db.con.escape(req.params.idPlate)
+    
+    const idPlate = req.params.idPlate
+    
     Composition.getAll(idPlate,(err, data) => {
         if (err) {
             if (err.kind === "not_found") {
