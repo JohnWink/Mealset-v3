@@ -11,7 +11,7 @@ const Rating = function (rating) {
 
 Rating.getAll = result => {
 
-    db.con.query('SELECT * FROM Rating_Restaurante', function (err, res) {
+    db.con.query('SELECT * FROM Rating_Restaurante WHERE ativo = 1', function (err, res) {
         if (err) {
             console.log(err)
             result(err, null)
