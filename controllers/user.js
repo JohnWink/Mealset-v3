@@ -25,7 +25,8 @@ exports.findById = (req,res) =>{
 }
 
 exports.findAll = (req,res) =>{
-    User.findById((err,data)=>{
+
+    User.findAll((err,data)=>{
         if(err){
             if(err.kind === "not_found"){
                 res.status(404).send({"Not found": "Nenhum User foi encontrado"})
