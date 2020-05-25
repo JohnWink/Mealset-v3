@@ -1,7 +1,7 @@
 module.exports = app => {
     const rating = require("../controllers/restaurant_rating.js")
 
-    app.get('/restaurants/ratings', rating.getAll)
+    app.get('/ratings', rating.getAll)
 
     app.get('/restaurants/:idRestaurant/users/:idUser/ratings', rating.findById);
 
