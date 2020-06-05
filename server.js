@@ -33,6 +33,11 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "8080"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 //app.use(expressSanitized.middleware());
 
 /*
@@ -99,8 +104,8 @@ app.use(session({
 */
 
 
-app.listen(3000,function(){
-    console.log("Server running at http://127.0.0:3000/")
+app.listen(8080,function(){
+    console.log("Server running at http://localhost:8080/")
 })
 
 
