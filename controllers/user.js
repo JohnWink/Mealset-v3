@@ -373,7 +373,7 @@ exports.newPassword = (req,res)=>{
                         service:'gmail',
                         auth:{
                             user:'devjohnwink@gmail.com',
-                            pass:'googleSiOl920092.'
+                            pass:'johndevjohnSiol920092..'
                         }
                     })
             
