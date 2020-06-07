@@ -40,7 +40,7 @@ exports.findAll = (req,res) =>{
     })
 }
 
-function sendSignUpMail(res,email){
+function sendSignUpMail(email){
 
     let idUser = 0
             
@@ -49,7 +49,7 @@ function sendSignUpMail(res,email){
             if(err.kind==="not_found"){
                 idUser = 0
             }else{
-                res.status(500).send({message:err.message || "Ocorreu um erro"})
+                console.log("Erro: ", err.message)
             }
         }else{
 
@@ -78,10 +78,10 @@ function sendSignUpMail(res,email){
             transporter.sendMail(mailOptions,function(err,info){
                 if(err){
                     console.log(err);
-                    res.status(500).send({message:err.message || "Ocorreu um erro"})
+                    console.log("Erro: ", err.message)
                 }else{
                     console.log('Message sent: ' + info.response);
-                    return res.status(201).send({"success": "Registo feito! Por favor verifique o seu email para confirmar a sua conta."});
+                   console.log("Email enviado")
                 }
             })
         
@@ -122,7 +122,8 @@ exports.signUp = (req,res)=>{
                             }
                   
                             else{
-                                sendSignUpMail(res,email)
+                                sendSignUpMail(email)
+                                return res.status(201).send({"success": "Registo feito! Por favor verifique o seu email para confirmar a sua conta."})
                             }
                            
                         })
@@ -174,7 +175,9 @@ exports.signUp = (req,res)=>{
                             */
                      
                            else{
-                            sendSignUpMail(res,email)
+                           
+                            sendSignUpMail(email)
+                            return res.status(201).send({"success": "Registo feito! Por favor verifique o seu email para confirmar a sua conta."})
                            } 
                            
                         })
