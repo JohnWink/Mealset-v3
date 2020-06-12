@@ -5,10 +5,11 @@ const Restaurant = function (restaurant) {
     this.nome = restaurant.name
     this.descrição = restaurant.description
     this.estacionamento = restaurant.parking
-    this.coverFoto = restaurant.foto
+    this.coverFoto = restaurant.coverFoto
     this.gps = restaurant.gpsAddress
     this.morada = restaurant.address
     this.Codigo_postal = restaurant.zipCode
+    this.logoImg = restaurant.logoImg
 
 }
 // Gets All restaurants from Database
@@ -81,8 +82,8 @@ Restaurant.create = (newRestaurant, result) => {
 
 Restaurant.update = (id,restaurantInfo,result) =>{
 
-    db.con.query("UPDATE Restaurante SET nome=?, descrição=?, estacionamento=?, coverFoto=?, gps=?, morada=?, Codigo_postal=? WHERE idRestaurante=? AND ativo = 1",
-    [restaurantInfo.nome, restaurantInfo.descrição, restaurantInfo.estacionamento, restaurantInfo.coverFoto,restaurantInfo.gps, restaurantInfo.morada,restaurantInfo.Codigo_postal,id],
+    db.con.query("UPDATE Restaurante SET nome=?, descrição=?, estacionamento=?, coverFoto=?, gps=?, morada=?, Codigo_postal=?, logoImg= ? WHERE idRestaurante=? AND ativo = 1",
+    [restaurantInfo.nome, restaurantInfo.descrição, restaurantInfo.estacionamento, restaurantInfo.coverFoto,restaurantInfo.gps, restaurantInfo.morada,restaurantInfo.Codigo_postal,restaurantInfo.logoImg,id],
     (err,res)=>{
         if(err){
             console.log("error:", err);

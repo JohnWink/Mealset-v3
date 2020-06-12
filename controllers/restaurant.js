@@ -66,7 +66,7 @@ const zipCode = req.body.zipCode;
             name: name,
             description: description,
             parking: parking,
-            foto: foto,
+            coverFoto: foto,
             gpsAddress: gpsAddress,
             address: gps,
             zipCode: zipCode
@@ -108,7 +108,7 @@ exports.update = (req,res) =>{
             name: name,
             description: description,
             parking: parking,
-            foto: foto,
+            coverFoto: foto,
             gpsAdress: gps,
             address: address,
             zipCode: zipCode
