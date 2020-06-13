@@ -483,6 +483,7 @@ exports.upload = (req,res) =>{
             res.status(500).send({ message: err.message || "Ocorreu um erro"})
         }else{
             console.log("Images Processed!")
+            console.log(res.file.filename)
             //res.send('test')
 
             if(req.file == undefined){
@@ -511,6 +512,7 @@ exports.upload = (req,res) =>{
                             })
                         }
                    }else{
+                    
                        res.status(200).send({"success": "User Atualizado com sucesso"})
                    }
                 })
