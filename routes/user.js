@@ -18,6 +18,8 @@ module.exports = app =>{
 
     app.put('/users/:idUser/newPassword',user.newPassword)
 
+    app.put('/users/:idUser/upload',user.upload)
+
     //app.delete('/users/:idUser',user.delete);
 
 }

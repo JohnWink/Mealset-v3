@@ -4,6 +4,8 @@ var config = require('../config');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer')
 const db = require("../db")
+const multer = require('multer')
+const path = require('path')
 
 
 exports.findById = (req,res) =>{
@@ -406,6 +408,85 @@ exports.newPassword = (req,res)=>{
 
     }
    
+}
+
+exports.upload = (req,res) =>{
+
+    const idUser = req.params.idUser
+
+    const storage = multer.diskStorage({
+        destination:"./public/uploads",
+        filename: function(req,file,cb){
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        }
+    })
+
+    const upload = multer({
+        storage:storage,
+        fileFiler:function(req,file,cb){
+            checkFileType(file,cb);
+        }
+    }).single("avatar")
+
+    function checkFileType(file,cb){
+
+        const filetypes = /jpeg|jpg|png|gif/;
+
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        const mimetype = filetypes.test(file.mimetype)
+
+        if(mimetype && extname){
+            return cb(null,true)
+        }else{
+            cb('Error: Images Only!')
+        }
+    }
+
+    upload(req,res,(err)=>{
+        if(err){
+            console.log("error:", err)
+            res.status(500).send({ message: err.message || "Ocorreu um erro"})
+        }else{
+            console.log("Images Processed!")
+            //res.send('test')
+
+            if(req.file == undefined){
+                res.status(400).send({msg:"Error:no File Selected!"}) // 400 = bad request
+            }else{
+                //console.log(req.files.logo[0].filename)
+                /* 
+                res.status(201).send({
+                    
+                    msg:'File Uploaded!',
+                    file:`public/uploads/${req.files.logo[0].filename}`
+                })
+                */
+
+                let avatar = `public/uploads/${req.file.filename}`
+                
+
+                User.upload(idUser,avatar,(err,data)=>{
+                    if(err){
+                        if(err.kind === "not_found"){
+                            res.status(404).send({"Not found" : "User não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                            })
+                        }
+                   }else{
+                       res.status(200).send({"success": "User Atualizado com sucesso"})
+                   }
+                })
+                
+            }
+        }
+    })
+
+
 }
 
 exports.passwordUpdate = (req,res) =>{
