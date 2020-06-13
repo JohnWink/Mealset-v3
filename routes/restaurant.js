@@ -13,6 +13,8 @@ router.get('/',function(req,res){
 module.exports = app =>{
 
     const restaurants = require("../controllers/restaurant.js")
+    const multer = require('multer')
+    //const upload = multer({dest:'../public/uploads/'})
 
     app.get('/restaurants',restaurants.getAll)
 
@@ -21,6 +23,8 @@ module.exports = app =>{
     app.post('/restaurants', restaurants.create)
 
     app.put('/restaurants/:idRestaurant', restaurants.update)
+
+    app.put('/restaurants/:idRestaurant/upload',restaurants.upload)
 
     app.delete('/restaurants/:idRestaurant', restaurants.delete)
 

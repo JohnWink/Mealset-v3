@@ -113,7 +113,7 @@ Plate.deleteAll = (idRestaurant,result) => {
   };
 
   Plate.update=(idPlate, plate,result)=>{
-      db.con.query("UPDATE Prato SET nome=?,descrição=?,preço=?,foto=? WHERE idPrato = ? AND ativo = 1",
+      db.con.query("UPDATE Prato SET nome=?,descrição=?,preço=?,foto=? WHERE idPrato = ?",
       [plate.nome, plate.descrição, plate.preço,plate.foto,idPlate],
       (err,res)=>{
           if(err){
@@ -125,6 +125,19 @@ Plate.deleteAll = (idRestaurant,result) => {
           else{
               result(null,{plate})
           }
+      })
+  }
+
+  Plate.upload=(idPlate,image,result)=>{
+      db.con.query("UPDATE Prato SET foto = ? WHERE idPrato = ? AND ativo = 1", [image,idPlate],(err,res)=>{
+        if(err){
+            console.log("error:", err);
+            return result(err,null)
+        }else if(res.affectedRows == 0){
+            return result({kind:"not_found"},null)
+        }else{
+            return result(null,"Upload Efetuado")
+        }
       })
   }
 

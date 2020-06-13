@@ -1,5 +1,8 @@
 const Restaurant = require("../models/restaurant.js")
 const db = require("../db")
+const multer = require('multer')
+const path = require('path')
+
 
  exports.getAll = (req,res) =>{
     Restaurant.getAll((err,data)=>{
@@ -130,7 +133,91 @@ exports.update = (req,res) =>{
        })
     }
 }
+// Work in progress 
+exports.upload = (req,res)=>{
 
+    const idRestaurant = req.params.idRestaurant
+
+  
+    
+
+    const storage = multer.diskStorage({
+        destination:"./public/uploads",
+        filename: function(req,file,cb){
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        }
+    })
+
+
+    const upload = multer({
+        storage:storage,
+        fileFiler:function(req,file,cb){
+            checkFileType(file,cb);
+        }
+    }).fields([{name:'cover',maxCount:1}, {name:'logo',maxCount:1}])
+
+    function checkFileType(file,cb){
+
+        const filetypes = /jpeg|jpg|png|gif/;
+
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        const mimetype = filetypes.test(file.mimetype)
+
+        if(mimetype && extname){
+            return cb(null,true)
+        }else{
+            cb('Error: Images Only!')
+        }
+    }
+
+    upload(req,res,(err)=>{
+        if(err){
+            console.log("error:", err)
+            res.status(500).send({ message: err.message || "Ocorreu um erro"})
+        }else{
+            console.log("Images Processed!")
+            //res.send('test')
+
+            if(req.files == undefined){
+                res.status(400).send({msg:"Error:no File Selected!"}) // 400 = bad request
+            }else{
+                //console.log(req.files.logo[0].filename)
+                /* 
+                res.status(201).send({
+                    
+                    msg:'File Uploaded!',
+                    file:`public/uploads/${req.files.logo[0].filename}`
+                })
+                */
+
+                let logo = `public/uploads/${req.files.logo[0].filename}`
+                let cover = `public/uploads/${req.files.cover[0].filename}`
+
+                Restaurant.upload(idRestaurant,logo,cover,(err,data)=>{
+                    if(err){
+                        if(err.kind === "not_found"){
+                            res.status(404).send({"Not found" : "Restaurante não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                            })
+                        }
+                   }else{
+                       res.status(200).send({"success": "Restaurante Atualizado com sucesso"})
+                   }
+                })
+                
+            }
+        }
+    })
+
+
+
+
+}
 exports.delete = (req,res) =>{
     
     const idRestaurant = req.params.idRestaurant

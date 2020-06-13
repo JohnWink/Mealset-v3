@@ -1,5 +1,7 @@
 const Plate = require("../models/plate.js")
 const db = require("../db")
+const multer = require('multer')
+const path = require('path')
 
 exports.getAll = (req, res) => {
     Plate.getAll((err, data) => {
@@ -88,6 +90,77 @@ exports.create = (req, res) => {
 
         })
     }
+}
+//Work in progress
+exports.upload = (req,res) =>{
+
+    const idPlate = req.params.idPlate
+
+    const storage = multer.diskStorage({
+        destination:"./public/uploads",
+        filename: function(req,file,cb){
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        }
+    })
+
+
+    const upload = multer({
+        storage:storage,
+        fileFiler:function(req,file,cb){
+            checkFileType(file,cb);
+        }
+    }).single("imgDish")
+
+    function checkFileType(file,cb){
+
+        const filetypes = /jpeg|jpg|png|gif/;
+
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        const mimetype = filetypes.test(file.mimetype)
+
+        if(mimetype && extname){
+            return cb(null,true)
+        }else{
+            cb('Error: Images Only!')
+        }
+    }
+
+
+    upload(req,res,(err)=>{
+        if(err){
+            console.log("error:", err)
+            res.status(500).send({ message: err.message || "Ocorreu um erro"})
+
+        }else{
+
+            console.log(req.file.filename)
+
+            if(req.file == undefined){
+                res.status(400).send({msg:"Error:no File Selected!"})
+            }else{
+                let image = `public/uploads/${req.file.filename}`
+
+                Plate.upload(idPlate,image,(err,data)=>{
+                    if(err){
+                        if(err.kind === "not_found"){
+                            res.status(404).send({"Not found" : "Prato não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                            })
+                        }
+                   }else{
+                       res.status(200).send({"success": "Prato Atualizado com sucesso"})
+                   }
+                })
+            }
+
+        }
+    })
+
 }
 
 exports.delete = (req, res) => {
