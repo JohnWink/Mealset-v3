@@ -483,7 +483,7 @@ exports.upload = (req,res) =>{
             res.status(500).send({ message: err.message || "Ocorreu um erro"})
         }else{
             console.log("Images Processed!")
-            console.log("Image name and location: ", res.file.filename)
+            console.log("Image name and location: ", req.file.filename)
             //res.send('test')
 
             if(req.file == undefined){
