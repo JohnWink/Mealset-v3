@@ -125,7 +125,24 @@ exports.signUp = (req,res)=>{
                   
                             else{
                                 sendSignUpMail(email)
-                                return res.status(201).send({"success": "Registo feito! Por favor verifique o seu email para confirmar a sua conta."})
+                                User.getLastId((err,data)=>{
+                                    if(err){
+
+                                        if(err.kind==="not_found"){
+                                            idUser = 0
+                                        }else{
+                                            console.log("Erro: ", err.message)
+                                        }
+
+                                    }else{
+
+                                        const lastUserId = data[0].idUser
+
+                                        return res.status(201).send({"success": lastUserId})
+
+                                    }
+                                })
+                                
                             }
                            
                         })
@@ -179,7 +196,23 @@ exports.signUp = (req,res)=>{
                            else{
                            
                             sendSignUpMail(email)
-                            return res.status(201).send({"success": "Registo feito! Por favor verifique o seu email para confirmar a sua conta."})
+                             User.getLastId((err,data)=>{
+                                    if(err){
+
+                                        if(err.kind==="not_found"){
+                                            idUser = 0
+                                        }else{
+                                            console.log("Erro: ", err.message)
+                                        }
+
+                                    }else{
+
+                                        const lastUserId = data[0].idUser
+
+                                        return res.status(201).send({"success": lastUserId})
+                                        
+                                    }
+                                })
                            } 
                            
                         })
