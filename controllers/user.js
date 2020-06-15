@@ -9,9 +9,8 @@ const path = require('path')
 const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
-var S3_BUCKET
 
-S3_BUCKET = process.env.S3_BUCKET
+
 /*
 if(S3_BUCKET == null || S3_BUCKET =="" ){
 

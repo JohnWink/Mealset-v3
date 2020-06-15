@@ -66,6 +66,7 @@ admin.initializeApp({
 
   */
 
+ 
 
 
 module.exports= app;
@@ -123,6 +124,7 @@ app.listen(port,function(){
   console.log("Server running at port", port)
 })
 
+const S3_BUCKET = process.env.S3_BUCKET
 
 
 
