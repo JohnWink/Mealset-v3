@@ -11,29 +11,21 @@ const multer = require('multer')
 const multerS3 = require('multer-s3')
 var S3_BUCKET
 
+S3_BUCKET = process.env.s3_bucket
 
-try{
-    const awsConfig  = require("../aws.config.js")
-    awsConfig.config
-    S3_BUCKET = 'mealset'
-}catch(e){
-    S3_BUCKET = process.env.s3_bucket
-    aws.config.region='eu-west-2'
-    aws.config.signatureVersion='v4'
-    console.log("awsConfig error catched. Heroku should be working")
-}
 /*
-if(S3_BUCKET == null || S3_BUCKET =="" ){
+if(!S3_BUCKET == null || S3_BUCKET =="" ){
 
     const awsConfig  = require("../aws.config.js")
 
-   
+    awsConfig.config
 
-   
+    S3_BUCKET = 'mealset'
     
 }
 */
-
+aws.config.region='eu-west-2'
+aws.config.signatureVersion='v4'
 
 
 
