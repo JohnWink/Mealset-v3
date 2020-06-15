@@ -4,14 +4,14 @@ var config = require('../config');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer')
 const db = require("../db")
-const aws = require("../aws.config.js")
+const awsConfig = require("../aws.config.js")
 const path = require('path')
 
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 
-aws.config
-const s3 = new aws.S3()
+awsConfig.config
+const s3 = new awsConfig.aws.S3()
 
 
 
