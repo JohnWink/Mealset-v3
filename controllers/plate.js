@@ -2,6 +2,27 @@ const Plate = require("../models/plate.js")
 const db = require("../db")
 const multer = require('multer')
 const path = require('path')
+const aws = require('aws-sdk')
+const multerS3 = require('multer-s3')
+
+var S3_BUCKET
+
+S3_BUCKET = process.env.S3_BUCKET
+
+
+if(S3_BUCKET == null || S3_BUCKET =="" ){
+
+    const awsConfig  = require("../aws.config.js")
+
+    awsConfig.config
+
+    S3_BUCKET = 'mealset'
+    
+}
+
+aws.config.region='eu-west-2'
+aws.config.signatureVersion='v4'
+
 
 exports.getAll = (req, res) => {
     Plate.getAll((err, data) => {
@@ -94,19 +115,22 @@ exports.create = (req, res) => {
 //Work in progress
 exports.upload = (req,res) =>{
 
+    const s3 = new aws.S3();
     const idPlate = req.params.idPlate
 
-    const storage = multer.diskStorage({
-        destination:"./public/uploads",
-        filename: function(req,file,cb){
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
-        }
-    })
-
+  
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
 
     const upload = multer({
-        storage:storage,
+        storage:multerS3({
+            s3:s3,
+            bucket:S3_BUCKET,
+    
+            key: function(req,file,cb){
+                cb(null,uniqueSuffix+path.extname(file.originalname))
+            },
+            ALC:'public-read'
+        }),
         fileFiler:function(req,file,cb){
             checkFileType(file,cb);
         }
