@@ -4,14 +4,29 @@ var config = require('../config');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer')
 const db = require("../db")
-const awsConfig = require("../aws.config.js")
-const path = require('path')
 
+const path = require('path')
+const aws = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
+var S3_BUCKET
 
-awsConfig.config
-const s3 = new awsConfig.aws.S3()
+S3_BUCKET = process.env.s3_bucket
+
+if(S3_BUCKET == null || S3_BUCKET =="" ){
+
+    const awsConfig  = require("../aws.config.js")
+
+    awsConfig.config
+
+    S3_BUCKET = 'mealset'
+    
+}
+aws.config.region='eu-west-2'
+aws.config.signatureVersion='v4'
+
+
+
 
 
 
@@ -454,6 +469,7 @@ exports.newPassword = (req,res)=>{
 
 exports.upload = (req,res) =>{
 
+    const s3 = new aws.S3();
     const idUser = req.params.idUser
 
     /*
@@ -473,11 +489,12 @@ exports.upload = (req,res) =>{
     var upload = multer({
         storage:multerS3({
             s3:s3,
-            bucket:'mealset',
+            bucket:S3_BUCKET,
     
             key: function(req,file,cb){
                 cb(null,uniqueSuffix+path.extname(file.originalname))
-            }
+            },
+            ALC:'public-read'
         }),
         
         fileFiler:function(req,file,cb){
