@@ -4,8 +4,24 @@ var config = require('../config');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer')
 const db = require("../db")
-const multer = require('multer')
+
 const path = require('path')
+const aws = require('aws-sdk')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
+
+
+aws.config.update({
+    accessKeyId:'AKIAIMY5SAZXZPWFZFZA',
+    secretAccessKey:'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',
+    //paramValidation: false,
+    region: "eu-west-2" ,
+    signatureVersion: 'v4'
+})
+const s3 = new aws.S3()
+
+
+
 
 
 exports.findById = (req,res) =>{
@@ -447,19 +463,34 @@ exports.upload = (req,res) =>{
 
     const idUser = req.params.idUser
 
-    const storage = multer.diskStorage({
-        destination:"./public/uploads",
-        filename: function(req,file,cb){
+    /*
+    const storage = multerS3({
+        s3:s3.con,
+        bucket:'mealset',
+        acl:'public-read',
+        key:function(req,file,cb){
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
             cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
         }
     })
+    */
+ 
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
 
-    const upload = multer({
-        storage:storage,
+    var upload = multer({
+        storage:multerS3({
+            s3:s3,
+            bucket:'mealset',
+    
+            key: function(req,file,cb){
+                cb(null,uniqueSuffix+path.extname(file.originalname))
+            }
+        }),
+        
         fileFiler:function(req,file,cb){
             checkFileType(file,cb);
         }
+        
     }).single("avatar")
 
     function checkFileType(file,cb){
@@ -483,7 +514,8 @@ exports.upload = (req,res) =>{
             res.status(500).send({ message: err.message || "Ocorreu um erro"})
         }else{
             console.log("Images Processed!")
-            console.log("Image name and location: ", req.file.filename)
+            console.log("Image name and location: ", req.file.key)
+
             //res.send('test')
 
             if(req.file == undefined){
@@ -498,7 +530,7 @@ exports.upload = (req,res) =>{
                 })
                 */
 
-                let avatar = `public/uploads/${req.file.filename}`
+                let avatar = `https://mealset.s3.eu-west-2.amazonaws.com/${req.file.key}`
                 
 
                 User.upload(idUser,avatar,(err,data)=>{
