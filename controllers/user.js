@@ -4,17 +4,13 @@ var config = require('../config');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer')
 const db = require("../db")
-
+const aws = require("../aws.config.js")
 const path = require('path')
-const aws = require('aws-sdk')
+
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 
-
-aws.config.update({
-    region: "eu-west-2" ,
-    signatureVersion: 'v4'
-})
+aws.config
 const s3 = new aws.S3()
 
 
