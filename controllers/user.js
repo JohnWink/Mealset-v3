@@ -101,7 +101,7 @@ function sendSignUpMail(email){
                 from:'devjohnwink@gmail.com',
                 to:email,
                 subject:"Registo MealSet",
-                html:'<h1>Obrigado registar no MealSet! Por favor confirme a sua conta clicando no link abaixo!</h1><a href="https://cors-anywhere.herokuapp.com/mealset.herokuapp.com/confirm/'+token+'"><H2>Clique aqui!</H2></a>'
+                html:'<h1>Obrigado registar no MealSet! Por favor confirme a sua conta clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'"><H2>Clique aqui!</H2></a>'
             }
 
             transporter.sendMail(mailOptions,function(err,info){
