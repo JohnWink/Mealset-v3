@@ -1,6 +1,7 @@
 var express = require("express");
 //var expressSanitized = require("express-sanitize-escape")
 var bodyParser = require("body-parser");
+var mustacheExpress = require('mustache-express')
 //var admin = require('firebase-admin');
 //var serviceAccount = require("./mealset-1579630397236-firebase-adminsdk-qcgpv-dd5a66335d.json")
 //const {Storage} = require('@google-cloud/storage');
@@ -32,6 +33,11 @@ var app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+
+app.engine('html',mustacheExpress())
+app.set('view engine', 'html')
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "8080"); // update to match the domain you will make the request from

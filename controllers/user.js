@@ -101,7 +101,7 @@ function sendSignUpMail(email){
                 from:'devjohnwink@gmail.com',
                 to:email,
                 subject:"Registo MealSet",
-                html:'<h1>Obrigado registar no MealSet! Por favor confirme a sua conta clicando no link abaixo!</h1><a href="http://localhost:3000/confirm/'+token+'"><H2>Clique aqui!</H2></a>'
+                html:'<h1>Obrigado registar no MealSet! Por favor confirme a sua conta clicando no link abaixo!</h1><a href="https://cors-anywhere.herokuapp.com/mealset.herokuapp.com/confirm/'+token+'"><H2>Clique aqui!</H2></a>'
             }
 
             transporter.sendMail(mailOptions,function(err,info){
@@ -305,8 +305,21 @@ exports.confirm = (req,res) =>{
                         res.status(500).send({message:err.message || "Ocorreu um erro"})
                     }
                 }else{
-
-                    res.status(200).send({"success":"Email foi verificado"})
+                    User.findById(data.id,(err,result)=>{
+                       if(err){
+                            if(err.kind==="not_found"){
+                                res.status(404).send({"not found": "O utilizador não foi encontrado"})
+                            }
+                            else{
+                                res.status(500).send({message:err.message || "Ocorreu um erro"})
+                            }
+                       }else{
+                            res.status(200).render('signUpConfirm.html',{
+                            name: result[0].username
+                            })
+                       } 
+                    })
+                    
                 }
             })
         
