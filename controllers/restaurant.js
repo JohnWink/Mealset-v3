@@ -92,7 +92,8 @@ const zipCode = req.body.zipCode;
             coverFoto: foto,
             gpsAddress: gpsAddress,
             address: gps,
-            zipCode: zipCode
+            zipCode: zipCode,
+            active: 0
         })
 
         //Save Restaurant in the database
@@ -110,6 +111,25 @@ const zipCode = req.body.zipCode;
     }
 }
 
+exports.confirm = (req,res)=>{
+    const idRestaurant = req.params.idRestaurant
+
+    Restaurant.confirm(idRestaurant,(err,data)=>{
+        if(err){
+            if(err.kind === "not_found"){
+                res.status(404).send({"Not found" : "Restaurante não foi encontrado"})
+            }
+            else{
+                res.status(500).send({
+                    message: err.message || "Ocorreu um erro"
+                })
+            }
+       }else{
+           res.status(200).send({"success": "Restaurante confirmado com sucesso"})
+       }
+    })
+}
+
 exports.update = (req,res) =>{
     //validate request
     if(!req.body){
@@ -121,7 +141,6 @@ exports.update = (req,res) =>{
         const name = db.con.escape(req.body.name)
         const description = db.con.escape(req.body.description)
         const parking = req.body.parking
-        const foto = req.body.foto
         const gps = db.con.escape(req.body.gps)
         const address = db.con.escape(req.body.address)
         const zipCode = req.body.zipCode
@@ -131,10 +150,9 @@ exports.update = (req,res) =>{
             name: name,
             description: description,
             parking: parking,
-            coverFoto: foto,
             gpsAdress: gps,
             address: address,
-            zipCode: zipCode
+            zipCode: zipCode,
        })
 
        Restaurant.update(idRestaurant,restaurant,(err,data)=>{

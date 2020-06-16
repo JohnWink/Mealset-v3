@@ -10,6 +10,7 @@ const Restaurant = function (restaurant) {
     this.morada = restaurant.address
     this.Codigo_postal = restaurant.zipCode
     this.logoImg = restaurant.logoImg
+    this.ativo = restaurant.active
 
 }
 // Gets All restaurants from Database
@@ -80,10 +81,25 @@ Restaurant.create = (newRestaurant, result) => {
     
 }
 
+Restaurant.confirm = (id,result) =>{
+    db.con.query('UPDATE Restaurant SET ativo = 1 WHERE idRestaurante = ? and ativo = 0',id,(err,res)=>{
+        if(err){
+            console.log("error:", err);
+            return result(err,null)
+        }
+        //If no row has been affected/changed, an error will occur
+        else if(res.affectedRows == 0){
+            return result({kind:"not_found"},null)
+        }else{
+            return result(null,"Restaurante confirmado")
+        }
+    })
+}
+
 Restaurant.update = (id,restaurantInfo,result) =>{
 
-    db.con.query("UPDATE Restaurante SET nome=?, descrição=?, estacionamento=?, coverFoto=?, gps=?, morada=?, Codigo_postal=?, logoImg= ? WHERE idRestaurante=? AND ativo = 1",
-    [restaurantInfo.nome, restaurantInfo.descrição, restaurantInfo.estacionamento, restaurantInfo.coverFoto,restaurantInfo.gps, restaurantInfo.morada,restaurantInfo.Codigo_postal,restaurantInfo.logoImg,id],
+    db.con.query("UPDATE Restaurante SET nome=?, descrição=?, estacionamento=?,  gps=?, morada=?, Codigo_postal=?, WHERE idRestaurante=? AND ativo = 1",
+    [restaurantInfo.nome, restaurantInfo.descrição, restaurantInfo.estacionamento,restaurantInfo.gps, restaurantInfo.morada,restaurantInfo.Codigo_postal,id],
     (err,res)=>{
         if(err){
             console.log("error:", err);

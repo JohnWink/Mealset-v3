@@ -459,7 +459,7 @@ exports.newPassword = (req,res)=>{
                         from:'devjohnwink@gmail.com',
                         to:email,
                         subject:"Confirmar nova password",
-                        html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="http://localhost:3000/confirm/'+token+'/'+newPassword+'"><H2>Clique aqui!</H2></a>'
+                        html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'/'+newPassword+'"><H2>Clique aqui!</H2></a>'
                     }
             
                     transporter.sendMail(mailOptions,function(err,info){
