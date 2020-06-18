@@ -239,6 +239,7 @@ exports.upload = (req,res)=>{
             res.status(500).send({ message: err.message || "Ocorreu um erro"})
         }else{
             console.log("Images Processed!")
+            console.log("Images:  ", req.files.logo[0].key)
             //res.send('test')
 
             if(req.files == undefined){
@@ -253,8 +254,8 @@ exports.upload = (req,res)=>{
                 })
                 */
 
-                let logo = `public/uploads/${req.files.logo[0].filename}`
-                let cover = `public/uploads/${req.files.cover[0].filename}`
+                let logo = `https://mealset.s3.eu-west-2.amazonaws.com/${req.files.logo[0].key}`
+                let cover = `https://mealset.s3.eu-west-2.amazonaws.com/${req.files.cover[0].key}`
 
                 Restaurant.upload(idRestaurant,logo,cover,(err,data)=>{
                     if(err){
