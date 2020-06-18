@@ -165,9 +165,9 @@ exports.signUp = (req,res)=>{
 
                                     }else{
 
-                                        const lastUserId = data[0].idUser
+                                        //onst lastUserId = data[0].idUser
 
-                                        return res.status(201).send({"success": lastUserId})
+                                        return res.status(201).send({"success": [data]})
 
                                     }
                                 })
@@ -238,7 +238,7 @@ exports.signUp = (req,res)=>{
 
                                         const lastUserId = data[0].idUser
 
-                                        return res.status(201).send({"success": lastUserId})
+                                        return res.status(201).send({"success": [data]})
                                         
                                     }
                                 })
