@@ -119,8 +119,9 @@ const zipCode = req.body.zipCode;
                                })
                         }
                     }else{
-                        //const lastIdRestaurant = data.idRestaurante
-                        res.status(201).send({"success": [data]})
+                        const lastIdRestaurant = data.idRestaurante
+
+                        res.status(201).send({"success": lastIdRestaurant})
                     }  
                 })
                
