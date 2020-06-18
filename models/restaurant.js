@@ -65,6 +65,23 @@ Restaurant.findById = (restaurantId, result) => {
 
 }
 
+Restaurant.getLastId = (result) =>{
+
+    db.con.query("SELECT Max(idRestaurante) as idRestaurante FROM Restaurante",(err,res)=>{
+        if(err){
+            console.log("error:", err)
+            return result(err, null)
+        }
+        else if(!res[0]){
+            return result({ kind: "not_found" }, null)
+        }
+        else{
+            return result(null, res[0])
+        }
+    })
+    
+}
+
 Restaurant.create = (newRestaurant, result) => {
     //Preparing to add new restaurant Database
     db.con.query("INSERT INTO Restaurante SET ?", newRestaurant, (err, res) => {

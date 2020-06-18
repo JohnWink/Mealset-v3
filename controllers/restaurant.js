@@ -62,6 +62,7 @@ exports.findById = (req,res) =>{
         }else{
            
             res.status(200).send({"success":[data]})
+            
         }
     })
 }
@@ -104,8 +105,27 @@ const zipCode = req.body.zipCode;
                     message:err.message || "Ocorreu um erro"
                 })
             }
+            else{
                 console.log("Sucesso na criação do restaurante")
-                res.status(201).send({"success":"Restaurante Criado com sucesso"})
+
+                Restaurant.getLastId((err,data)=>{
+                    if(err){
+                        if(err.kind==="not_found"){
+                            idUser = 0
+                        }else{
+                            console.log("Erro: ", err.message)
+                               res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                               })
+                        }
+                    }else{
+                        const lastIdRestaurant = data.idRestaurante
+                        res.status(201).send({"success": lastIdRestaurant})
+                    }  
+                })
+               
+            }
+           
             
         })
     }

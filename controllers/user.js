@@ -128,6 +128,7 @@ exports.signUp = (req,res)=>{
         const email = req.body.email
         const contact = req.body.contact
         const password = req.body.password
+        const idRestaurant = req.body.idRestaurant
         const userType = db.con.escape(req.body.userType)
 
         
@@ -141,6 +142,7 @@ exports.signUp = (req,res)=>{
                             email: email,
                             contact: contact,
                             password:hash,
+                            idRestaurant: idRestaurant,
                             userType: userType,
                             active:0
                         })
