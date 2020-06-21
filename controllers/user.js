@@ -348,10 +348,20 @@ exports.login = (req,res) =>{
 
                 let found = false
                 let errorMessage = ""
-
+                let userTypeData = ""
+                let usernameData = ""
+                let dietData = ""
+                let idRestaurantData = 0
                 data.find((data)=>{
               
                     if(data.username == username && bcrypt.compareSync(password,data.password)){
+
+                        userTypeData = data.userType
+                        usernameData = data.username
+                        dietData = data.dieta
+                        idRestaurantData = data.idRestaurante
+
+                        
                         found = true
                       
                     }
@@ -363,7 +373,7 @@ exports.login = (req,res) =>{
                         expiresIn: 86400 // expires in 24 hours
                       });
 
-                    res.status(201).send({ auth: true, token: token });
+                    res.status(201).send({ auth: true, token: token,username:usernameData, diet:dietData,idRestaurant:idRestaurantData,  userType:userTypeData });
                 }else{
                     res.status(401).send({ auth: false, token: null, message:"As credenciais são inválidas" });
                 }
