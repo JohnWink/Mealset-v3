@@ -19,7 +19,7 @@ exports.getAll = (req, res) => {
 
 exports.findById = (req, res) => {
 
-    const ingredient = db.con.escape(req.params.idIngredient)
+    const ingredient = req.params.idIngredient
 
     Ingredient.findById(ingredient, (err, data) => {
         if (err) {
@@ -44,8 +44,8 @@ exports.update = (req, res) => {
     }
     else {
 
-        const name = db.con.escape(req.body.name)
-        const idIngredient = db.con.escape(req.params.idIngredient)
+        const name = req.body.name
+        const idIngredient = req.params.idIngredient
 
         Ingredient.findById(name,(err,data)=>{
             if(err){
@@ -85,7 +85,7 @@ exports.create = (req, res) => {
     }
     else {
 
-        const name = db.con.escape(req.body.name)
+        const name = req.body.name
 
         Ingredient.findById(name,(err,data)=>{
             if(err){
@@ -115,7 +115,7 @@ exports.create = (req, res) => {
 
 exports.delete = (req, res) => {
 
-    const idIngredient = db.con.escape(req.params.idIngredient)
+    const idIngredient = req.params.idIngredient
     
     Ingredient.delete(idIngredient, (err, data) => {
         if (err) {

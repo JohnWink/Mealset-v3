@@ -82,7 +82,7 @@ exports.create = (req,res) => {
         const idClient = req.params.idUser
         const idTable = req.params.idTable
         const time = req.body.time
-        const name = db.con.escape(req.body.name)
+        const name = req.body.name
         const n_people = req.body.n_people
 
         const reservation = new Reservation({
@@ -117,7 +117,7 @@ exports.update = (req,res) =>{
 
         const idReservation = req.params.idReservation
         const time = req.body.time
-        const name = db.con.escape(req.body.name)
+        const name = req.body.name
         const n_people = req.body.n_people
 
         const reservation = new Reservation({

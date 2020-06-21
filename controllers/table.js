@@ -44,9 +44,9 @@ exports.create = (req,res) =>{
     }
     else{
 
-        const name = db.con.escape(req.body.name)
+        const name = req.body.name
         const size = req.body.size
-        const description = db.con.escape(req.body.description)
+        const description = req.body.description
         const smoking = req.body.smoking
         const outside = req.body.outside
         const idRestaurant = req.params.idRestaurant
@@ -79,9 +79,9 @@ exports.update = (req,res) =>{
     }
     else{
 
-        const name = db.con.escape(req.body.name)
+        const name = req.body.name
         const size = req.body.size
-        const description = db.con.escape(req.body.description)
+        const description = req.body.description
         const smoking = req.body.smoking
         const outside = req.body.outside
         const idTable = req.params.idTable

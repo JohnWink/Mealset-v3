@@ -70,12 +70,12 @@ exports.findById = (req,res) =>{
 
 exports.create = (req,res) =>{
     
-const name = db.con.escape(req.body.name);
-const description = db.con.escape(req.body.description);
+const name = req.body.name;
+const description = req.body.description;
 const parking = req.body.parking;
-const foto = db.con.escape(req.body.foto);
-const gpsAddress = db.con.escape(req.body.gpsAddress);
-const gps = db.con.escape(req.body.gps);
+const foto = req.body.foto;
+const gpsAddress = req.body.gpsAddress;
+const gps = req.body.gps;
 const zipCode = req.body.zipCode;
 
     //Validar pedido
@@ -159,11 +159,11 @@ exports.update = (req,res) =>{
         })
     }else{
 
-        const name = db.con.escape(req.body.name)
-        const description = db.con.escape(req.body.description)
+        const name = req.body.name
+        const description = req.body.description
         const parking = req.body.parking
-        const gps = db.con.escape(req.body.gps)
-        const address = db.con.escape(req.body.address)
+        const gps = req.body.gps
+        const address = req.body.address
         const zipCode = req.body.zipCode
         const idRestaurant = req.params.idRestaurant
  

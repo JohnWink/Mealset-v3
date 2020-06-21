@@ -53,9 +53,9 @@ exports.create = (req, res) => {
     }
     else {
 
-        const ingredient = db.con.escape(req.body.ingredient)
+        const ingredient = req.body.ingredient
         const quantity = req.body.quantity
-        const measurement = db.con.escape(req.body.measurement)
+        const measurement = req.body.measurement
         const idPlate = req.params.idPlate
         
         const composition = new Composition({
@@ -132,9 +132,9 @@ exports.update = (req, res) => {
         })
     } else {
 
-        const ingredient = db.con.escape(req.body.ingredient)
+        const ingredient = req.body.ingredient
         const quantity = req.body.quantity
-        const measurement= db.con.escape(req.body.measurement)
+        const measurement= req.body.measurement
         const idComposition = req.params.idComposition
  
 

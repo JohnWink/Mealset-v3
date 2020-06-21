@@ -124,12 +124,12 @@ exports.signUp = (req,res)=>{
     if(!req.body){
         res.status(400).send({message:"Content cannot be empty"})
     }else{
-        const username = db.con.escape(req.body.username)
+        const username = req.body.username
         const email = req.body.email
         const contact = req.body.contact
         const password = req.body.password
         const idRestaurant = req.body.idRestaurant
-        const userType = db.con.escape(req.body.userType)
+        const userType = req.body.userType
 
         
 
@@ -333,7 +333,7 @@ exports.confirm = (req,res) =>{
 
 exports.login = (req,res) =>{
 
-    const username = db.con.escape(req.body.username)
+    const username = req.body.username
     const password = req.body.password
 
     
@@ -405,7 +405,7 @@ exports.update = (req,res) =>{
     else{
         const contact = req.body.contact;
         const avatar = req.body.avatar;
-        const diet = db.con.escape(req.body.diet);
+        const diet = req.body.diet;
         const idUser = req.params.idUser
 
         let user={
@@ -439,8 +439,8 @@ exports.newPassword = (req,res)=>{
         res.status(400).send({message:"Content cannot be empty"})
     }else{
         const idUser = req.params.idUser
-        const password = db.con.escape(req.body.password)
-        const newPassword = db.con.escape(req.body.newPassword)
+        const password = req.body.password
+        const newPassword = req.body.newPassword
         let email = ""
 
 
@@ -611,7 +611,7 @@ exports.upload = (req,res) =>{
 exports.passwordUpdate = (req,res) =>{
 
     const token = req.params.token
-    const password = db.con.escape(req.params.password)
+    const password = req.params.password
 
     var data = jwt.decode(token,config.secret);
 

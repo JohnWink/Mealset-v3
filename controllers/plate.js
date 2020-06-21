@@ -80,8 +80,8 @@ exports.create = (req, res) => {
     }
     else {
 
-        const name = db.con.escape(req.body.name)
-        const description = db.con.escape(req.body.description)
+        const name = req.body.name
+        const description = req.body.description
         const price = req.body.price
         const foto = req.body.foto
         const idRestaurant = req.params.idRestaurant
@@ -242,8 +242,8 @@ exports.deleteAll = (req, res) => {
       }
       else{
 
-        const name = db.con.escape(req.body.name)
-        const description = db.con.escape(req.body.description)
+        const name = req.body.name
+        const description = req.body.description
         const price = req.body.price
         const foto = req.body.foto
         const idPlate = req.params.idPlate

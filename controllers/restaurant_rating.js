@@ -104,7 +104,7 @@ exports.create = (req, res) => {
         const idRestaurant = req.params.idRestaurant
         const idUser = req.params.idUser
         const value = req.body.rating
-        const comment = db.con.escape(req.body.comment)
+        const comment = req.body.comment
         const dateTime =req.body.dateTime
 
         // Check if the Rating already exists
@@ -159,7 +159,7 @@ exports.update = (req, res) => {
     }
     else {
         const rating = req.body.rating;
-        const comment = db.con.escape(req.body.comment);
+        const comment = req.body.comment;
         const dateTime = req.body.dateTime;
         const idRestaurant = req.params.idRestaurant;
         const idUser = req.params.idUser;

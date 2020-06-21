@@ -22,7 +22,7 @@ exports.findbyRestaurant = (req,res) =>{
 
 exports.findByDay = (req,res) =>{
 
-    const idDayMeal = db.con.escape(req.params.idDayMeal)
+    const idDayMeal = req.params.idDayMeal
 
     DayMeal.findByDay(idDayMeal,(err,data)=>{
         if (err) {
@@ -60,7 +60,7 @@ exports.findByPlate = (req,res) =>{
 
 exports.create = (req,res) =>{
     
-    const idDayMeal = db.con.escape(req.params.idDayMeal)
+    const idDayMeal = req.params.idDayMeal
     const idPlate = req.params.idPlate
 
         DayMeal.findById(idDayMeal,idPlate,(err,data)=>{
@@ -96,7 +96,7 @@ exports.create = (req,res) =>{
 
 exports.update = (req,res) =>{
 
-    const idDayMeal = db.con.escape(req.params.idDayMeal)
+    const idDayMeal = req.params.idDayMeal
     const idPlate = req.params.idPlate
 
     DayMeal.findById(idDayMeal,idPlate,(err,data)=>{
@@ -137,7 +137,7 @@ exports.update = (req,res) =>{
 
 exports.delete = (req,res) =>{
     
-    const idDayMeal = db.con.escape(req.params.idDayMeal)
+    const idDayMeal = req.params.idDayMeal
     const idPlate = req.params.idPlate
 
     DayMeal.delete(idDayMeal,idPlate,(err,data)=>{
