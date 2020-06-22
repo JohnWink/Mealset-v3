@@ -74,7 +74,7 @@ const name = req.body.name;
 const description = req.body.description;
 const parking = req.body.parking;
 const foto = req.body.foto;
-const gpsAddress = req.body.gpsAddress;
+const address = req.body.address;
 const gps = req.body.gps;
 const zipCode = req.body.zipCode;
 
@@ -91,8 +91,8 @@ const zipCode = req.body.zipCode;
             description: description,
             parking: parking,
             coverFoto: foto,
-            gpsAddress: gpsAddress,
-            address: gps,
+            gpsAddress: gps,
+            address: address,
             zipCode: zipCode,
             active: 0
         })
