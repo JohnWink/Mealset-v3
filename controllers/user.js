@@ -407,14 +407,14 @@ exports.update = (req,res) =>{
     }
     else{
         const contact = req.body.contact;
-        const avatar = req.body.avatar;
         const diet = req.body.diet;
+        const email = req.body.email
         const idUser = req.params.idUser
 
         let user={
             contact:contact,
-            avatar: avatar,
-            diet: diet
+            diet: diet,
+            email:email
         }
             
         User.update(user,idUser,(err,data)=>{
