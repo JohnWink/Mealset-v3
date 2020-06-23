@@ -347,6 +347,7 @@ exports.login = (req,res) =>{
             }else{
 
                 let found = false
+                let idUserData = 0
                 let errorMessage = ""
                 let userTypeData = ""
                 let usernameData = ""
@@ -358,6 +359,7 @@ exports.login = (req,res) =>{
               
                     if(data.username == username && bcrypt.compareSync(password,data.password)){
 
+                        idUserData = data.idUser
                         userTypeData = data.userType
                         usernameData = data.username
                         dietData = data.dieta
@@ -382,6 +384,7 @@ exports.login = (req,res) =>{
                     res.status(201).send({ 
                         auth: true,
                         token: token,
+                        idUser: idUserData,
                         username:usernameData, 
                         diet:dietData,email:emaiData,
                         avatar: avatarData,
