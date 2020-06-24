@@ -48,7 +48,7 @@ exports.findById = (req,res) =>{
             }
         }
         else{
-            res.status(200).send({"success": [data]})
+            res.status(200).send({"success": data})
         }
     })
 }
@@ -64,7 +64,7 @@ exports.findAll = (req,res) =>{
             }
         }
         else{
-            res.status(200).send({"success": [data]})
+            res.status(200).send({"success": data})
         }
     })
 }
