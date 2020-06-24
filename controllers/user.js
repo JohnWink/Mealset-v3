@@ -408,13 +408,11 @@ exports.update = (req,res) =>{
     else{
         const contact = req.body.contact;
         const diet = req.body.diet;
-        const email = req.body.email
         const idUser = req.params.idUser
 
         let user={
             contact:contact,
-            diet: diet,
-            email:email
+            diet: diet
         }
             
         User.update(user,idUser,(err,data)=>{
@@ -439,7 +437,7 @@ exports.update = (req,res) =>{
                         }
                     }
                     else{
-                        res.status(200).send({"success": [data]})
+                        res.status(200).send({"success": data})
                     }
                 })
                 //res.status(200).send({"success":"Os dados foram atualizados com sucesso"})
