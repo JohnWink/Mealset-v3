@@ -84,8 +84,8 @@ User.confirm = (idUser,result)=>{
 }
 
 User.update = (user,idUser,result)=>{
-    db.con.query("UPDATE User SET contacto = ?, avatar = ? , dieta = ?  WHERE idUser = ? AND ativo = 1",
-    [user.contact,user.avatar, user.diet,idUser],(err,res)=>{
+    db.con.query("UPDATE User SET contacto = ?, dieta = ?  WHERE idUser = ? AND ativo = 1",
+    [user.contact, user.diet,idUser],(err,res)=>{
         if(err){
 
             console.log("error:", err)
