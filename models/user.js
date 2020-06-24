@@ -10,7 +10,7 @@ const User = function (user){
 }
 
 User.findById = (idUser,result) =>{
-    db.con.query("SELECT username, email, contacto, avatar, password, dieta, userType,idRestaurante FROM User WHERE idUser = ? AND ativo = 1",
+    db.con.query("SELECT username, email, contacto, avatar, dieta, userType,idRestaurante FROM User WHERE idUser = ? AND ativo = 1",
     idUser,(err,res)=>{
         if(err){
             console.log("Error:", err)
