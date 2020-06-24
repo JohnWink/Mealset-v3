@@ -39,7 +39,7 @@ exports.getAll = (req, res) => {
                 })
             }
         } else {
-            res.status(200).send({"success":[data]})
+            res.status(200).send({"success":data})
         }
     })
 
@@ -64,7 +64,29 @@ exports.findById = (req, res) => {
             }
             
         } else {
-            res.status(200).send({"success":[data]})
+            res.status(200).send({"success":data})
+        }
+    })
+}
+
+exports.findByRestaurant = (req,res) =>{
+    const idRestaurant = req.params.idRestaurant
+
+    Plate.findByRestaurant(idRestaurant, (err, data) => {
+        if (err) {
+            if(err.kind === "not_found"){
+                res.status(404).send({
+                    "Not Found": `Os pratos não foram encontrados.`
+                }); 
+            }
+            else{
+                res.status(500).send({
+                    message: err.message || "Ocorreu um erro"
+                })
+            }
+            
+        } else {
+            res.status(200).send({"success":data})
         }
     })
 }

@@ -58,6 +58,28 @@ Plate.findById = (plateId, result) => {
 
 }
 
+Plate.findByRestaurant =(idRestaurant,result) =>{
+    db.con.query("SELECT * FROM Prato WHERE idRestaurante = ? AND ativo = 1", idRestaurant, (err, res) => {
+
+        // If there's any problem with the data retrieval 
+        if (err) {
+            console.log("error:", err)
+            result(err, null)
+            return
+        }
+        // If there's the found plate
+        else if (res[0]) {
+            result(null, res[0])
+            return
+        }
+        // If there's no plate found
+        else {
+            result({ kind: "not_found" }, null)
+            return
+        }
+    }) 
+}
+
 Plate.create = (newPlate, result) => {
     //Preparing to add new plate Database
     db.con.query("INSERT INTO Prato SET ?", newPlate, (err, res) => {

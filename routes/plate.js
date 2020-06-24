@@ -8,6 +8,8 @@ module.exports = app => {
 
     app.get('/plates/:idPlate', plate.findById)
 
+    app.get('/restaurants/:idRestaurant/plates' , plate.findByRestaurant)
+
     app.put('/plates/:idPlate',plate.update)
 
     app.put('/plates/:idPlate/upload',plate.upload)
