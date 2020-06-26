@@ -281,6 +281,205 @@ exports.upload = (req,res)=>{
 
 
 }
+
+exports.uploadLogo = (req,res) =>{
+
+    const s3 = new aws.S3();
+    const idRestaurant = req.params.idRestaurant
+
+    /*
+    const storage = multerS3({
+        s3:s3.con,
+        bucket:'mealset',
+        acl:'public-read',
+        key:function(req,file,cb){
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        }
+    })
+    */
+ 
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+
+    var upload = multer({
+        storage:multerS3({
+            s3:s3,
+            bucket:S3_BUCKET,
+    
+            key: function(req,file,cb){
+                cb(null,uniqueSuffix+path.extname(file.originalname))
+            },
+            ALC:'public-read'
+        }),
+        
+        fileFiler:function(req,file,cb){
+            checkFileType(file,cb);
+        }
+        
+    }).single("logo")
+
+    function checkFileType(file,cb){
+
+        const filetypes = /jpeg|jpg|png|gif/;
+
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        const mimetype = filetypes.test(file.mimetype)
+
+        if(mimetype && extname){
+            return cb(null,true)
+        }else{
+            cb('Error: Images Only!')
+        }
+    }
+
+    upload(req,res,(err)=>{
+        if(err){
+            console.log("error:", err)
+            res.status(500).send({ message: err.message || "Ocorreu um erro"})
+        }else{
+            console.log("Images Processed!")
+            console.log("Image name and location: ", req.file.key)
+
+            //res.send('test')
+
+            if(req.file == undefined){
+                res.status(400).send({msg:"Error:no File Selected!"}) // 400 = bad request
+            }else{
+                //console.log(req.files.logo[0].filename)
+                /* 
+                res.status(201).send({
+                    
+                    msg:'File Uploaded!',
+                    file:`public/uploads/${req.files.logo[0].filename}`
+                })
+                */
+
+                let logo = `https://mealset.s3.eu-west-2.amazonaws.com/${req.file.key}`
+                
+
+                Restaurant.uploadLogo(idRestaurant,logo,(err,data)=>{
+                    if(err){
+                        if(err.kind === "not_found"){
+                            res.status(404).send({"Not found" : "Restaurante não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                            })
+                        }
+                   }else{
+                    
+                       res.status(200).send({"success": "Restaurante Atualizado com sucesso"})
+                   }
+                })
+                
+            }
+        }
+    })
+
+
+}
+
+exports.uploadCover = (req,res) =>{
+
+    const s3 = new aws.S3();
+    const idRestaurant = req.params.idRestaurant
+
+    /*
+    const storage = multerS3({
+        s3:s3.con,
+        bucket:'mealset',
+        acl:'public-read',
+        key:function(req,file,cb){
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+            cb(null,file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+        }
+    })
+    */
+ 
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+
+    var upload = multer({
+        storage:multerS3({
+            s3:s3,
+            bucket:S3_BUCKET,
+    
+            key: function(req,file,cb){
+                cb(null,uniqueSuffix+path.extname(file.originalname))
+            },
+            ALC:'public-read'
+        }),
+        
+        fileFiler:function(req,file,cb){
+            checkFileType(file,cb);
+        }
+        
+    }).single("cover")
+
+    function checkFileType(file,cb){
+
+        const filetypes = /jpeg|jpg|png|gif/;
+
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        const mimetype = filetypes.test(file.mimetype)
+
+        if(mimetype && extname){
+            return cb(null,true)
+        }else{
+            cb('Error: Images Only!')
+        }
+    }
+
+    upload(req,res,(err)=>{
+        if(err){
+            console.log("error:", err)
+            res.status(500).send({ message: err.message || "Ocorreu um erro"})
+        }else{
+            console.log("Images Processed!")
+            console.log("Image name and location: ", req.file.key)
+
+            //res.send('test')
+
+            if(req.file == undefined){
+                res.status(400).send({msg:"Error:no File Selected!"}) // 400 = bad request
+            }else{
+                //console.log(req.files.logo[0].filename)
+                /* 
+                res.status(201).send({
+                    
+                    msg:'File Uploaded!',
+                    file:`public/uploads/${req.files.logo[0].filename}`
+                })
+                */
+
+                let cover = `https://mealset.s3.eu-west-2.amazonaws.com/${req.file.key}`
+                
+
+                Restaurant.uploadCover(idRestaurant,cover,(err,data)=>{
+                    if(err){
+                        if(err.kind === "not_found"){
+                            res.status(404).send({"Not found" : "Restaurante não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({
+                                message: err.message || "Ocorreu um erro"
+                            })
+                        }
+                   }else{
+                    
+                       res.status(200).send({"success": "Restaurante Atualizado com sucesso"})
+                   }
+                })
+                
+            }
+        }
+    })
+
+
+}
+
 exports.delete = (req,res) =>{
     
     const idRestaurant = req.params.idRestaurant

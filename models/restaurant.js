@@ -144,6 +144,32 @@ Restaurant.upload = (id,logo,cover,result)=>{
     })
 }
 
+Restaurant.uploadCover = (id,cover,result)=>{
+    db.con.query("UPDATE Restaurante SET coverFoto = ? WHERE idRestaurante = ? AND ativo = 1", [cover,id], (err,res)=>{
+        if(err){
+            console.log("error:", err);
+            return result(err,null)
+        }else if(res.affectedRows == 0){
+            return result({kind:"not_found"},null)
+        }else{
+            return result(null,"Upload Efetuado")
+        }
+    })
+}
+
+Restaurant.uploadLogo = (id,logo,result)=>{
+    db.con.query("UPDATE Restaurante SET logoImg = ? WHERE idRestaurante = ? AND ativo = 1", [logo,id], (err,res)=>{
+        if(err){
+            console.log("error:", err);
+            return result(err,null)
+        }else if(res.affectedRows == 0){
+            return result({kind:"not_found"},null)
+        }else{
+            return result(null,"Upload Efetuado")
+        }
+    })
+}
+
 Restaurant.delete = (id,result) =>{
     
             db.con.query("UPDATE Restaurante SET ativo = 0 WHERE idRestaurante = ? AND ativo = 1",id,(err,res)=>{

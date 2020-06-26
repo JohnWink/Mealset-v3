@@ -26,6 +26,10 @@ module.exports = app =>{
 
     app.put('/restaurants/:idRestaurant/upload',restaurants.upload)
 
+    app.put('/restaurants/:idRestaurant/uploadCover',restaurants.uploadCover)
+
+    app.put('/restaurants/:idRestaurant/uploadLogo', restaurants.uploadLogo)
+
     app.delete('/restaurants/:idRestaurant', restaurants.delete)
 
     
