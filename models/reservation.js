@@ -86,8 +86,8 @@ Reservation.update = (idReservation,newReservation,result)=>{
     })
 }
 
-Reservation.confirm = (idReservation,result)=>{
-    db.con.query("UPDATE Reserva SET confirmado = 1 WHERE idReserva = ? AND ativo = 1", idReservation,(err,res)=>{
+Reservation.confirm = (status,idReservation,result)=>{
+    db.con.query("UPDATE Reserva SET confirmado = ? WHERE idReserva = ? AND ativo = 1", status,idReservation,(err,res)=>{
         if(err){
             console.log("error:", err)
             return result(err,null)

@@ -89,6 +89,7 @@ require("./routes/plate_rating.js")(app)
 require("./routes/dayMeal.js")(app)
 require("./routes/user.js")(app)
 require("./routes/locations.js")(app)
+require("./routes/notification.js")(app)
 
 
 /*

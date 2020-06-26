@@ -126,8 +126,18 @@ exports.create = (req, res) => {
                 })
             }
             else{
-                console.log("Sucesso na criação do prato")
-                res.status(201).send({ "success": "Prato criado" })
+                Plate.findById((err,data)=>{
+                    if (err) {
+                        console.log("error catched")
+                        res.status(500).send({
+                            message: err.message || "Ocorreu um erro"
+                        })
+                    }else{
+                        console.log("Sucesso na criação do prato")
+                        res.status(201).send({ "success": data })
+                    }
+                })
+
             }
     
 
