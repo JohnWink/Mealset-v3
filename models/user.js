@@ -2,6 +2,7 @@ const db = require("../db")
 
 const User = function (user){
     this.username = user.username
+    this.idRestaurante = user.idRestaurant
     this.email = user.email
     this.contacto = user.contact
     this.password = user.password
