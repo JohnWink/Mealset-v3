@@ -189,12 +189,12 @@ exports.upload = (req,res) =>{
 
         }else{
 
-            console.log(req.file.filename)
+            console.log(req.file.key)
 
             if(req.file == undefined){
                 res.status(400).send({msg:"Error:no File Selected!"})
             }else{
-                let image = `public/uploads/${req.file.filename}`
+                let image = `https://mealset.s3.eu-west-2.amazonaws.com/${req.file.key}`
 
                 Plate.upload(idPlate,image,(err,data)=>{
                     if(err){

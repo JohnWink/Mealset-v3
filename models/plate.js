@@ -96,7 +96,7 @@ Plate.findByRestaurant =(idRestaurant,result) =>{
         }
         // If there's the found plate
         else if (res[0]) {
-            result(null, res[0])
+            result(null, res)
             return
         }
         // If there's no plate found
