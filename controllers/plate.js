@@ -105,7 +105,6 @@ exports.create = (req, res) => {
         const name = req.body.name
         const description = req.body.description
         const price = req.body.price
-        const foto = req.body.foto
         const idRestaurant = req.params.idRestaurant
 
         //Create Plate
@@ -113,7 +112,6 @@ exports.create = (req, res) => {
             name: name,
             description: description,
             price: price,
-            foto: foto,
             idRestaurant: idRestaurant
         })
 
