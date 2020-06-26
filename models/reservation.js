@@ -87,7 +87,7 @@ Reservation.update = (idReservation,newReservation,result)=>{
 }
 
 Reservation.confirm = (status,idReservation,result)=>{
-    db.con.query("UPDATE Reserva SET confirmado = ? WHERE idReserva = ? AND ativo = 1", status,idReservation,(err,res)=>{
+    db.con.query("UPDATE Reserva SET confirmado = ? WHERE idReserva = ? AND ativo = 1", [status,idReservation],(err,res)=>{
         if(err){
             console.log("error:", err)
             return result(err,null)
@@ -102,7 +102,7 @@ Reservation.confirm = (status,idReservation,result)=>{
 }
 
 Reservation.deleteById = (idReservation,result)=>{
-    db.con.query("UPDATE Reserva SET ativo = 0 WHERE idReserva = ?", idReservation,result,(err,res)=>{
+    db.con.query("UPDATE Reserva SET ativo = 0 WHERE idReserva = ?", idReservation,(err,res)=>{
         if(err){
             console.log("error:", err)
             return result(err,null)
