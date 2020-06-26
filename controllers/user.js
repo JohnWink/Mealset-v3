@@ -1,4 +1,5 @@
 const User = require('../models/user.js');
+const Restaurant = require('../models/restaurant.js')
 const bcrypt = require("bcrypt");
 var config = require('../config');
 var jwt = require('jsonwebtoken');
@@ -316,9 +317,31 @@ exports.confirm = (req,res) =>{
                                 res.status(500).send({message:err.message || "Ocorreu um erro"})
                             }
                        }else{
-                            res.status(200).render('signUpConfirm.html',{
-                            name: result[0].username
+                           
+                        let username = result[0].username
+                        let idRestaurant = result[0].idRestaurante
+
+                        if(idRestaurant != null){
+                            Restaurant.confirm(result[0].idRestaurante,(err,result)=>{
+                                if(err){
+                                    if(err.kind==="not_found"){
+                                        res.status(404).send({"not found": "O utilizador não foi encontrado"})
+                                    }
+                                    else{
+                                        res.status(500).send({message:err.message || "Ocorreu um erro"})
+                                    }
+                                }else{
+                                    res.status(200).render('signUpConfirm.html',{
+                                    name: username
+                                    })
+                                }
                             })
+                        }else{
+                            res.status(200).render('signUpConfirm.html',{
+                            name: username
+                            })
+                        }
+                            
                        } 
                     })
                     
