@@ -124,7 +124,7 @@ exports.create = (req, res) => {
                 })
             }
             else{
-                Plate.findById((err,data)=>{
+                Plate.findLastId((err,data)=>{
                     if (err) {
                         console.log("error catched")
                         res.status(500).send({

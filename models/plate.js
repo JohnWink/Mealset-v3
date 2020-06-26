@@ -61,7 +61,7 @@ Plate.findById = (plateId, result) => {
 Plate.findLastId = (result) => {
 
     //Send prepared command to Database
-    db.con.query("SELECT max(idPlate) as idPlate FROM Prato ",(err, res) => {
+    db.con.query("SELECT max(idPrato) as idPrato FROM Prato ",(err, res) => {
 
         // If there's any problem with the data retrieval 
         if (err) {
