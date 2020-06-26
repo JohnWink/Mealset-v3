@@ -201,6 +201,7 @@ exports.signUp = (req,res)=>{
                     bcrypt.hash(password,10).then(function(hash){
                         const user = new User({
                             username : username,
+                            idRestaurant: idRestaurant,
                             email: email,
                             contact: contact,
                             password:hash,
@@ -317,7 +318,7 @@ exports.confirm = (req,res) =>{
                                 res.status(500).send({message:err.message || "Ocorreu um erro"})
                             }
                        }else{
-                           
+
                         let username = result[0].username
                         let idRestaurant = result[0].idRestaurante
 

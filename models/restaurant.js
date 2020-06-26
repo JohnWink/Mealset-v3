@@ -99,7 +99,7 @@ Restaurant.create = (newRestaurant, result) => {
 }
 
 Restaurant.confirm = (id,result) =>{
-    db.con.query('UPDATE Restaurant SET ativo = 1 WHERE idRestaurante = ? and ativo = 0',id,(err,res)=>{
+    db.con.query('UPDATE Restaurante SET ativo = 1 WHERE idRestaurante = ? and ativo = 0',id,(err,res)=>{
         if(err){
             console.log("error:", err);
             return result(err,null)
