@@ -536,9 +536,8 @@ exports.newPassword = (req,res)=>{
                             }
                         }).catch((error)=>{
                             console.log(error)
-                            res.status(500).send({message:error || "Ocorreu um erro"})
                         })
-                    
+                   
                     
                 }else{
                     res.status(401).send({ auth: false, token: null, message:"A password é  inválida" });
@@ -665,22 +664,21 @@ exports.passwordUpdate = (req,res) =>{
     if(new Date(data.exp)> new Date()){
         
             console.log("user found");
-            
+
             bcrypt.hash(password,10).then(function(hash){
-                User.updatePassword(data.id,hash,(err,result)=>{
-                    if(err){
-                        if(err.kind==="not_found"){
-                            res.status(404).send({"not found": "O utilizador não foi encontrado"})
-                        }
-                        else{
-                            res.status(500).send({message:err.message || "Ocorreu um erro"})
-                        }
-                    }else{
-                        
-                        res.status(200).render('newPasswordConfirm.html')
-                        //res.status(200).send({"success":"A nova password foi introduzida com êxito"})
-                        
+                
+            User.updatePassword(data.id,hash,(err,result)=>{
+                if(err){
+                    if(err.kind==="not_found"){
+                        res.status(404).send({"not found": "O utilizador não foi encontrado"})
                     }
+                    else{
+                        res.status(500).send({message:err.message || "Ocorreu um erro"})
+                    }
+                }else{
+                    res.status(200).render('newPasswordConfirm.html')
+                    //res.status(200).send({"success":"A nova password foi introduzida com êxito"})
+                }
 
             })
         })
