@@ -669,7 +669,8 @@ exports.passwordUpdate = (req,res) =>{
                         res.status(500).send({message:err.message || "Ocorreu um erro"})
                     }
                 }else{
-                    res.status(200).send({"success":"A nova password foi introduzida com êxito"})
+                    res.status(200).render('newPasswordConfirm.html')
+                    //res.status(200).send({"success":"A nova password foi introduzida com êxito"})
                 }
 
             })
