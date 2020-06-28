@@ -106,7 +106,7 @@ exports.create = (req, res) => {
         const description = req.body.description
         const price = req.body.price
         const idRestaurant = req.params.idRestaurant
-        const recommended = req.params.recommended
+        const recommended = req.body.recommended
         //Create Plate
         const plate = new Plate({
             name: name,
