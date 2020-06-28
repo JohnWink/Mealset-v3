@@ -7,6 +7,7 @@ const Plate = function (plate) {
     this.preço = plate.price
     this.foto = plate.photo
     this.idRestaurante = plate.idRestaurant
+    this.recomendado = plate.recommended
 
 }
 // Gets All plates from Database
@@ -162,8 +163,8 @@ Plate.deleteAll = (idRestaurant,result) => {
   };
 
   Plate.update=(idPlate, plate,result)=>{
-      db.con.query("UPDATE Prato SET nome=?,descrição=?,preço=?,foto=? WHERE idPrato = ?",
-      [plate.nome, plate.descrição, plate.preço,plate.foto,idPlate],
+      db.con.query("UPDATE Prato SET nome=?,descrição=?,preço=?,foto=?, recomendado = ? WHERE idPrato = ?",
+      [plate.nome, plate.descrição, plate.preço,plate.recommended,idPlate],
       (err,res)=>{
           if(err){
               result(err,null)

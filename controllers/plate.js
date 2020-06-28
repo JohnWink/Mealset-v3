@@ -106,13 +106,14 @@ exports.create = (req, res) => {
         const description = req.body.description
         const price = req.body.price
         const idRestaurant = req.params.idRestaurant
-
+        const recommended = req.params.recommended
         //Create Plate
         const plate = new Plate({
             name: name,
             description: description,
             price: price,
-            idRestaurant: idRestaurant
+            idRestaurant: idRestaurant,
+            recommended: recommended
         })
 
         //Save Plate in the database
@@ -277,12 +278,13 @@ exports.deleteAll = (req, res) => {
         const price = req.body.price
         const foto = req.body.foto
         const idPlate = req.params.idPlate
+        const recommended = req.params.recommended
 
           const plate = new Plate({
               name:name,
               description: description,
               price: price,
-              foto: foto
+              recommended: recommended
           })
 
           Plate.update(idPlate,plate,(err,data)=>{
