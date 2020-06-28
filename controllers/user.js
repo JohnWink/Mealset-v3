@@ -534,8 +534,6 @@ exports.newPassword = (req,res)=>{
                                 console.log('Message sent: ' + info.response);
                                 return res.status(200).send({"success": "Por favor verifique o seu email para confirmar a sua nova password."});
                             }
-                        }).catch((error)=>{
-                            console.log(error)
                         })
                    
                     
