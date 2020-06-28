@@ -278,7 +278,7 @@ exports.deleteAll = (req, res) => {
         const price = req.body.price
         const foto = req.body.foto
         const idPlate = req.params.idPlate
-        const recommended = req.params.recommended
+        const recommended = req.body.recommended
 
           const plate = new Plate({
               name:name,
