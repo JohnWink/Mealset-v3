@@ -517,23 +517,29 @@ exports.newPassword = (req,res)=>{
                             pass:'devjohnwinkSiol920092.'
                         }
                     })
-            
-                    var mailOptions = {
-                        from:'devjohnwink@gmail.com',
-                        to:email,
-                        subject:"Confirmar nova password",
-                        html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'/'+newPassword+'"><H2>Clique aqui!</H2></a>'
-                    }
-            
-                    transporter.sendMail(mailOptions,function(err,info){
-                        if(err){
-                            console.log(err);
-                            res.status(500).send({message:err.message || "Ocorreu um erro"})
-                        }else{
-                            console.log('Message sent: ' + info.response);
-                            return res.status(200).send({"success": "Por favor verifique o seu email para confirmar a sua nova password."});
+                    
+                    bcrypt.hash(password,10).then(function(hash){
+                        var mailOptions = {
+                            from:'devjohnwink@gmail.com',
+                            to:email,
+                            subject:"Confirmar nova password",
+                            html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'/'+hash+'"><H2>Clique aqui!</H2></a>'
                         }
+                
+                        transporter.sendMail(mailOptions,function(err,info){
+                            if(err){
+                                console.log(err);
+                                res.status(500).send({message:err.message || "Ocorreu um erro"})
+                            }else{
+                                console.log('Message sent: ' + info.response);
+                                return res.status(200).send({"success": "Por favor verifique o seu email para confirmar a sua nova password."});
+                            }
+                        }).catch((error)=>{
+                            console.log(error)
+                            res.status(500).send({message:error || "Ocorreu um erro"})
+                        })
                     })
+                    
                 }else{
                     res.status(401).send({ auth: false, token: null, message:"A password é  inválida" });
                 }
@@ -659,7 +665,7 @@ exports.passwordUpdate = (req,res) =>{
     if(new Date(data.exp)> new Date()){
         
             console.log("user found");
-
+          
             User.updatePassword(data.id,password,(err,result)=>{
                 if(err){
                     if(err.kind==="not_found"){
