@@ -518,12 +518,12 @@ exports.newPassword = (req,res)=>{
                         }
                     })
                     
-                    bcrypt.hash(password,10).then(function(hash){
+                    
                         var mailOptions = {
                             from:'devjohnwink@gmail.com',
                             to:email,
                             subject:"Confirmar nova password",
-                            html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'/'+hash+'"><H2>Clique aqui!</H2></a>'
+                            html:'<h1>Por favor confirme a sua nova password clicando no link abaixo!</h1><a href="https://mealset.herokuapp.com/confirm/'+token+'/'+newPassword+'"><H2>Clique aqui!</H2></a>'
                         }
                 
                         transporter.sendMail(mailOptions,function(err,info){
@@ -538,7 +538,7 @@ exports.newPassword = (req,res)=>{
                             console.log(error)
                             res.status(500).send({message:error || "Ocorreu um erro"})
                         })
-                    })
+                    
                     
                 }else{
                     res.status(401).send({ auth: false, token: null, message:"A password é  inválida" });
@@ -665,21 +665,25 @@ exports.passwordUpdate = (req,res) =>{
     if(new Date(data.exp)> new Date()){
         
             console.log("user found");
-          
-            User.updatePassword(data.id,password,(err,result)=>{
-                if(err){
-                    if(err.kind==="not_found"){
-                        res.status(404).send({"not found": "O utilizador não foi encontrado"})
+            
+            bcrypt.hash(password,10).then(function(hash){
+                User.updatePassword(data.id,hash,(err,result)=>{
+                    if(err){
+                        if(err.kind==="not_found"){
+                            res.status(404).send({"not found": "O utilizador não foi encontrado"})
+                        }
+                        else{
+                            res.status(500).send({message:err.message || "Ocorreu um erro"})
+                        }
+                    }else{
+                        
+                        res.status(200).render('newPasswordConfirm.html')
+                        //res.status(200).send({"success":"A nova password foi introduzida com êxito"})
+                        
                     }
-                    else{
-                        res.status(500).send({message:err.message || "Ocorreu um erro"})
-                    }
-                }else{
-                    res.status(200).render('newPasswordConfirm.html')
-                    //res.status(200).send({"success":"A nova password foi introduzida com êxito"})
-                }
 
             })
+        })
         
     }else{
         console.log("Link is expired");
