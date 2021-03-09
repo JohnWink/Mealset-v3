@@ -94,7 +94,7 @@ function sendSignUpMail(email){
                 service:'gmail',
                 auth:{
                     user:'devjohnwink@gmail.com',
-                    pass:'SiOl920092.'
+                    pass:'higvebgbfblcfgni'
                 }
             })
 
@@ -514,7 +514,7 @@ exports.newPassword = (req,res)=>{
                         service:'gmail',
                         auth:{
                             user:'devjohnwink@gmail.com',
-                            pass:'devjohnwinkSiol920092.'
+                            pass:'higvebgbfblcfgni'
                         }
                     })
                     
