@@ -94,7 +94,7 @@ function sendSignUpMail(email){
                 service:'gmail',
                 auth:{
                     user:'devjohnwink@gmail.com',
-                    pass:'SiOl920092..'
+                    pass:'SiOl920092.'
                 }
             })
 
