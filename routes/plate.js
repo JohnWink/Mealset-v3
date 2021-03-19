@@ -14,6 +14,8 @@ module.exports = app => {
 
     app.put('/plates/:idPlate/upload',plate.upload)
 
+    app.put('/plates/:idPlate/linkUpload',plate.linkUpload)
+
     app.post('/restaurants/:idRestaurant/plates', plate.create)
 
     app.delete("/plates/:idPlate", plate.delete);

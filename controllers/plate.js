@@ -218,6 +218,27 @@ exports.upload = (req,res) =>{
 
 }
 
+exports.linkUpload = (req,res) =>{
+
+    const idPlate = req.params.idPlate
+    const image = req.body.image
+
+    Plate.upload(idPlate,image,(err,data)=>{
+        if(err){
+            if(err.kind === "not_found"){
+                res.status(404).send({"Not found" : "Prato não foi encontrado"})
+            }
+            else{
+                res.status(500).send({
+                    message: err.message || "Ocorreu um erro"
+                })
+            }
+       }else{
+           res.status(200).send({"success": "Prato Atualizado com sucesso"})
+       }
+    })
+}
+
 exports.delete = (req, res) => {
 
     const idPlate = req.params.idPlate
