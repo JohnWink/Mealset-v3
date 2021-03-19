@@ -355,6 +355,8 @@ exports.confirm = (req,res) =>{
     }
 }
 
+
+
 exports.login = (req,res) =>{
 
     const username = req.body.username
@@ -547,6 +549,42 @@ exports.newPassword = (req,res)=>{
 
     }
    
+}
+
+exports.linkUpload = (req,res) =>{
+    const link = req.body.link
+    const idUser = req.params.idUser
+    console.log("link: ", link)
+    console.log("user: ", idUser)
+    User.findById(idUser,(err,data)=>{
+        if(err){
+            if(err.kind === "not_found"){
+                res.status(404).send({"Not found": "User não foi encontrado"})
+            }else{
+                res.status(500).send({message:err.message ||"Ocorreu um erro"})
+            }
+        }
+        else{
+            console.log("we're here")
+            User.linkUpload(idUser,link,(err,data)=>{
+                if(err){
+                    if(err.kind === "not_found"){
+                        res.status(404).send({"Not found" : "User não foi encontrado"})
+                    }
+                    else{
+                        res.status(500).send({
+                            message: err.message || "Ocorreu um erro"
+                        })
+                    }
+               }else{
+                
+                   res.status(200).send({"success": "User Atualizado com sucesso"})
+               }
+            })
+        }
+    })
+
+
 }
 
 exports.upload = (req,res) =>{

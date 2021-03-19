@@ -170,6 +170,21 @@ Restaurant.uploadLogo = (id,logo,result)=>{
     })
 }
 
+Restaurant.linkUpload = (id,logo,cover,result)=>{
+    db.con.query("UPDATE Restaurante SET logoImg = ?, coverFoto = ? WHERE idRestaurante = ?", [logo,cover,id], (err,res)=>{
+        if(err){
+            console.log("error:", err);
+            return result(err,null)
+        }else if(res.affectedRows == 0){
+            return result({kind:"not_found"},null)
+        }else{
+            return result(null,"Upload Efetuado")
+        }
+    })
+}
+
+
+
 Restaurant.delete = (id,result) =>{
     
             db.con.query("UPDATE Restaurante SET ativo = 0 WHERE idRestaurante = ? AND ativo = 1",id,(err,res)=>{

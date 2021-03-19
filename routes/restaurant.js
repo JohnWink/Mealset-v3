@@ -32,5 +32,7 @@ module.exports = app =>{
 
     app.delete('/restaurants/:idRestaurant', restaurants.delete)
 
+    app.put('/restaurants/:idRestaurant/linkUpload',restaurants.linkUpload)
+
     
 }

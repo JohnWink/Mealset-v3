@@ -20,6 +20,8 @@ module.exports = app =>{
 
     app.put('/users/:idUser/upload',user.upload)
 
-    //app.delete('/users/:idUser',user.delete);
+    app.put('/users/:idUser/linkUpload',user.linkUpload)
 
+    //app.delete('/users/:idUser',user.delete);
+    
 }

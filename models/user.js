@@ -70,6 +70,21 @@ User.signUp = (newUser,result)=>{
     })
 }
 
+User.linkUpload = (idUser, link, result) =>{
+    db.con.query("UPDATE User SET avatar = ? WHERE idUser = ?",[link,idUser],(err,res)=>{
+        if(err){
+            console.log("error:", err)
+            return result(err,null)
+        }else if(res.affectedRows == 0){
+
+            return result({kind:"not_found"},null)
+        }else{
+            console.log("avatar inserido")
+            return result(null,res)
+        }
+    })
+}
+
 User.confirm = (idUser,result)=>{
     db.con.query("UPDATE User SET ativo = 1 WHERE idUser = ?",idUser,(err,res)=>{
         if(err){

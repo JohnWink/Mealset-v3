@@ -480,6 +480,33 @@ exports.uploadCover = (req,res) =>{
 
 }
 
+exports.linkUpload = (req,res) =>{
+    const logo = req.body.logo
+    const cover = req.body.cover
+    const idRestaurant = req.params.idRestaurant
+
+    Restaurant.linkUpload(idRestaurant,logo,cover,(err,data)=>{
+        if(err){
+            if(err.kind === "not_found"){
+                res.status(404).send({"Not found" : "Restaurante não foi encontrado"})
+            }
+            else{
+                res.status(500).send({
+                    message: err.message || "Ocorreu um erro"
+                })
+            }
+       }else{
+        
+           res.status(200).send({"success": "Restaurante Atualizado com sucesso"})
+       }
+    })
+    
+}
+
+
+
+
+
 exports.delete = (req,res) =>{
     
     const idRestaurant = req.params.idRestaurant
