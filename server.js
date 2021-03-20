@@ -38,8 +38,6 @@ app.use(bodyParser.json());
 app.engine('html',mustacheExpress())
 app.set('view engine', 'html')
 
-z
-
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", '*');
