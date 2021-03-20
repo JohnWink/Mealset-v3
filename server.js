@@ -40,8 +40,8 @@ app.set('view engine', 'html')
 
 z
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST");
+  res.header("Access-Control-Allow-Origin", "http://192.168.1.66:8080"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
