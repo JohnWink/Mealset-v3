@@ -5,6 +5,7 @@ const User = function (user){
     this.idRestaurante = user.idRestaurant
     this.email = user.email
     this.contacto = user.contact
+    this.avatar = user.avatar
     this.password = user.password
     this.userType = user.userType
     this.ativo = user.active
