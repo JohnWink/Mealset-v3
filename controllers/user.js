@@ -131,7 +131,6 @@ exports.signUp = (req,res)=>{
         const password = req.body.password
         const idRestaurant = req.body.idRestaurant
         const userType = req.body.userType
-        const avatar = req.body.avatar
         
 
         User.findAll((err,data)=>{
@@ -142,7 +141,6 @@ exports.signUp = (req,res)=>{
                             username : username,
                             email: email,
                             contact: contact,
-                            avatar: avatar,
                             password:hash,
                             idRestaurant: idRestaurant,
                             userType: userType,
@@ -205,7 +203,6 @@ exports.signUp = (req,res)=>{
                             idRestaurant: idRestaurant,
                             email: email,
                             contact: contact,
-                            avatar: avatar,
                             password:hash,
                             userType: userType, 
                             active:0
