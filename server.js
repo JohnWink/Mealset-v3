@@ -7,7 +7,7 @@ var mustacheExpress = require('mustache-express')
 //const {Storage} = require('@google-cloud/storage');
 //var session = require('express-session')
 const db = require("./db");
-import cors from 'cors';
+const cors = require('cors');
 
 
 /*
