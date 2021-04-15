@@ -7,7 +7,7 @@ var mustacheExpress = require('mustache-express')
 //const {Storage} = require('@google-cloud/storage');
 //var session = require('express-session')
 const db = require("./db");
-
+import cors from 'cors';
 
 
 /*
@@ -28,7 +28,7 @@ getAppInDeployedFunctions()
 
 var app = express();
 
-
+app.use(cors());
 
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.engine('html',mustacheExpress())
 app.set('view engine', 'html')
 
-
+/*
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", '*');
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -47,7 +47,8 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next();
 });
-
+*/
+ 
 //app.use(expressSanitized.middleware());
 
 /*
